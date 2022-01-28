@@ -1,6 +1,4 @@
 volatile long temp, counter = 0; //This variable will increase or decrease depending on the rotation of encoder
-const int stepPin1 = 7;
-const int dirPin1 = 6;
 const int stepPin1 = 11;
 const int dirPin1 = 10;
 
@@ -12,8 +10,8 @@ void setup() {
   Serial.begin (9600);
   
   // declaring pins as encoder outputs 
-  pinMode(CLK, INPUT_PULLUP); // internal pullup input pin 2 
-  pinMode(DT, INPUT_PULLUP); // internalเป็น pullup input pin 3
+  pinMode(CLK, INPUT_PULLUP); // internal pullup input pin 18 
+  pinMode(DT, INPUT_PULLUP); // internalเป็น pullup input pin 19
 
   // declaring pins as motor outputs 
   pinMode(stepPin1, OUTPUT);
@@ -36,9 +34,6 @@ void setup() {
   }
    
   void ai0() {
-    // ai0 is activated if DigitalPin nr 2 is going from LOW to HIGH
-    // Check pin 3 to determine the direction
-    if(digitalRead(3)==LOW) {
     // ai0 is activated if DigitalPin nr 18 is going from LOW to HIGH
     // Check pin 19 to determine the direction
     if(digitalRead(DT)==LOW) {
@@ -59,9 +54,6 @@ void setup() {
   }
    
   void ai1() {
-    // ai0 is activated if DigitalPin nr 3 is going from LOW to HIGH
-    // Check with pin 2 to determine the direction
-    if(digitalRead(2)==LOW) {
     // ai0 is activated if DigitalPin nr 19 is going from LOW to HIGH
     // Check with pin 18 to determine the direction
     if(digitalRead(CLK)==LOW) {
