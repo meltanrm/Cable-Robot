@@ -17,9 +17,8 @@
 int DELAY = 400;         // delay between steps in microsenconds(the initial movement)  
 int DELAY_SLOW = 1200;   // delay between steps in microsenconds(the second reverse movement)
 
-
 int BRAKE = 50;          // delay between end of rotation and encoderB measurment in miliseconds     
-int OFFSET= 20;             //  value to set the number of steps the stepper should overshoot its target             
+int OFFSET= 20;          //  value to set the number of steps the stepper should overshoot its target             
      
 int encoderA;     //encoder before moving
 int encoderB;     //encoder after moving
@@ -48,7 +47,7 @@ int DIFFmin=0;
 int CHECK=0;
 int BOUNCE=100;
 
-boolean C1=false;
+boolean C1=false;   // checkpoints 
 boolean C2=false;
 boolean C3=false;
 boolean C4=false;
@@ -61,14 +60,12 @@ void setup() {
 
   pinMode(2, INPUT_PULLUP); // internal pullup input pin 2 
   pinMode(3, INPUT_PULLUP); // internal pullup input pin 3
+  
   //Setting up interrupt
   //A rising pulse from encodenren activated ai0(). AttachInterrupt 0 is DigitalPin nr 2 on moust Arduino.
   attachInterrupt(0, ai0, RISING);
-   
   //B rising pulse from encodenren activated ai1(). AttachInterrupt 1 is DigitalPin nr 3 on moust Arduino.
   attachInterrupt(1, ai1, RISING);
-
-
 
  pinMode(DIR,OUTPUT);
  pinMode(STEP,OUTPUT);
@@ -77,25 +74,22 @@ void setup() {
 
 void loop() {
   
- 
+// calculating differences between destination entered and source (current position of the motor) 
 DIFF=600-abs(abs(SOURCE-DEST)-600);
 DIFFplus=600-abs(abs((SOURCE+1)-DEST)-600);
 DIFFmin=600-abs(abs((SOURCE-1)-DEST)-600);
-
-
-
 
  /////////////////////// Direction        
                                                                     
 if(DIFFplus>DIFFmin)
 {
-  digitalWrite(DIR,LOW);     //counter CLOCK wise
+  digitalWrite(DIR,LOW);     // motor needs to rotate counterclockwise to reach destination
  }
    
 if(DIFFplus<=DIFFmin)
   {
-  digitalWrite(DIR,HIGH);  //CLOCK wise
-  //Serial.println("X");
+  digitalWrite(DIR,HIGH);   // clockwise
+  //Serial.println("X");  
   }
 
 //
@@ -103,9 +97,9 @@ if(DIFFplus<=DIFFmin)
 //////////////////////////////Movement
 
   
-if(DEST!=SOURCE){   // diffrence between Source and Destination is tested
+if(DEST!=SOURCE){           // ensures there is a difference between source and destination
   GO=true;
-  encoderA = counter;          // the position before the movement start is stored encoder A
+  encoderA = counter;       // the position before the movement start is stored encoder A
 
  }
 
@@ -115,15 +109,15 @@ if(DEST!=SOURCE){   // diffrence between Source and Destination is tested
   delayMicroseconds(DELAY);                      
   digitalWrite(STEP,LOW); 
   delayMicroseconds(DELAY);
+  
   encoderB = counter; 
   encoderD=32752+(1/2)-abs(abs(encoderA-encoderB)-32752+(1/2)); //  the diffrence between encoder A & B is calculated and stored in encoderD      
   Serial.println(encoderB);
    
- if (encoderD > (DIFF+OFFSET))   
+ if (encoderD > (DIFF+OFFSET))   // if the motor is determined to have OVERSHOT, enter checkpoint 1
   {
-  GO=false;
-  C1=true;
-  
+    GO=false;
+    C1=true;
   }
 }
 
@@ -135,8 +129,8 @@ if(C1)
   encoderD=32752+(1/2)-abs(abs(encoderA-encoderB)-32752+(1/2)); //  update encoderD
 
   
- I_OVERSHOT=encoderD-DIFF; // POS is set to the value the stepper is stoped
-  C1=false;
+  I_OVERSHOT=encoderD-DIFF; // POS is set to the value the stepper is stoped. We calculate the number of steps overshot by and start checkpoint 2 
+  C1=false; 
   C2=true;
 
 }
@@ -148,19 +142,19 @@ while(C2)
   
    if(DIFFplus>DIFFmin)  
   {
-  digitalWrite(DIR,HIGH);   //clock
+  digitalWrite(DIR,HIGH);   // to correct the overshoot, we need to now rotate clockwise
   DIR_REV=false;
    }
    
  if(DIFFplus<=DIFFmin)
   {
-  digitalWrite(DIR,LOW);    //counter
+  digitalWrite(DIR,LOW);    //counterclockwise
   DIR_REV=true;
   }
 
   C2=false;
-  REVERSE=true;
-  encoderA = counter;          // the position before the movement start is stored encoder A
+  REVERSE=true;            // start reverse section
+  encoderA = counter;      // the position before the movement start is stored encoder A
 }
 
 
@@ -175,7 +169,7 @@ while (REVERSE)
   encoderB = counter;
   encoderD=32752+(1/2)-abs(abs(encoderA-encoderB)-32752+(1/2)); //  the diffrence between encoder A & B is calculated and stored in encoderD 
 
-if(encoderD>=I_OVERSHOT)      
+if(encoderD>=I_OVERSHOT)    // checking overshoot has been corrected  
 {
   REVERSE=false;
   C3=true;
@@ -186,16 +180,16 @@ if(encoderD>=I_OVERSHOT)
 if(C3)
 {
 
-delay(BRAKE); // make sure the setup stoped completely
-
-   encoderB = counter;
-   encoderD=32752+(1/2)-abs(abs(encoderA-encoderB)-32752+(1/2)); //  the diffrence between encoder A & B is calculated and stored in encoderD
-   CORRECTED = encoderD;
-C3=false;
-C4=true;
+  delay(BRAKE); // make sure the setup stoped completely
+  encoderB = counter;
+  encoderD=32752+(1/2)-abs(abs(encoderA-encoderB)-32752+(1/2)); //  the diffrence between encoder A & B is calculated and stored in encoderD
+  
+  CORRECTED = encoderD;
+  C3=false;
+  C4=true;
 }
 
-while(C4)
+while(C4) // checking errors were corrected by an appropriate amount
 {
   if(CORRECTED==I_OVERSHOT)    // the correction was spott. SOURCE can be set to DEST and no correction is needed 
   {
@@ -207,7 +201,6 @@ while(C4)
  
   if((CORRECTED < I_OVERSHOT)&& (DIR_REV))      // (1) clock high (2) counter low   // UNDERCORRECTED  xx 
   {
-
         SOURCE = (DEST + (I_OVERSHOT-CORRECTED)) ;
         DEST=SOURCE;
     }
