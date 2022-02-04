@@ -1,7 +1,7 @@
 // code for cable robot, wokring from input coordinates
 // 21.01.22
 
-#include <AccelStepper.h>
+//#include <AccelStepper.h>
 #include <Keypad.h>
 
  // Define pin connections & motor's steps per revolution
