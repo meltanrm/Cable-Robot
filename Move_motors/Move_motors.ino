@@ -1,11 +1,11 @@
 // Define pin connections & motor's steps per revolution
-const int dirPin1 = 6; // motor 1 
+const int dirPin1 = 6; // motor B 
 const int stepPin1 = 7;
-const int dirPin2 = 8; // motor 2 D spool
+const int dirPin2 = 8; // motor D spool
 const int stepPin2 = 9;
-const int dirPin3 = 10; // motor 3 
+const int dirPin3 = 10; // motor A
 const int stepPin3 = 11;
-const int dirPin4 = 12; // motor 4
+const int dirPin4 = 12; // motor C
 const int stepPin4 = 13;
 const int stepsPerRevolution = 200;
 
