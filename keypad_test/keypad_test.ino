@@ -21,9 +21,12 @@ void setup(){
 }
 
 void loop(){
-  char key = keypad.getKey();
+
+  int key = int(keypad.getKey());
+    int keyAsANumber = key - 48;
+
 
   if (key){
-    Serial.println(key);
+    Serial.println(keyAsANumber+4);
   }
 }
