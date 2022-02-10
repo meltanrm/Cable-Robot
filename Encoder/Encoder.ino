@@ -6,7 +6,7 @@ void setup() {
   pinMode(20, INPUT_PULLUP); // internal pullup input pin 20 
   
   pinMode(21, INPUT_PULLUP); // internal pullup input pin 21
-   //Setting up interrupt
+  //Setting up interrupt
   //A rising pulse from encodenren activated ai0(). AttachInterrupt 0 is DigitalPin nr 20 on moust Arduino.
   attachInterrupt(3, ai0, RISING);
    
