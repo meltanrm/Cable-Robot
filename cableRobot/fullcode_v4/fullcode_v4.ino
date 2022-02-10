@@ -24,11 +24,10 @@ char keys[ROWS][COLS] = {
   {'7','8','9','C'},
   {'*','0','#','D'}
 };
-byte rowPins[ROWS] = {25, 26, 27, 28}; //connect to the row pinouts of the keypad
+byte rowPins[ROWS] = {25, 26, 37, 28}; //connect to the row pinouts of the keypad. note, pin 27 doesn't work 
 byte colPins[COLS] = {29, 30, 31, 32}; //connect to the column pinouts of the keypad
 
 Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
-
 
 void setup() {
   Serial.begin(9600);
@@ -48,53 +47,62 @@ void setup() {
 // function to receiver user input for coordinates
 void recvInputCoord() {
     int counter = 0;
-    char nextCoordMarker = '\n'; // check what this is on keypad
+    int nextCoordMarker = -13; // ascii 35 - 48 
     char endMarker = '*';
     float character[3];
-    int characterInt_x;
-    int characterInt_y;
-    int characterInt_z;
+    float characterInt_x; // not used 
+    int characterInt_y; // not used 
+    int characterInt_z; // not used 
     boolean newData = false;
     float Cp[3] = {0, 0, 0};
 
 // need to add in error chcking that code only operates on numbesr entered on the keypad, not the letters 
 // keypad.getkey returns a character 
+// int(keypad.getkey) retrns the ascii 
+
+// need to make this code work for double digit numbers
 
     while (newData == false) {
-      Serial.println("i'm in the whileloop");
 //      while (Serial.available() > 0 && newData == false) {
 
-        while (keypad.getKey()!= nextCoordMarker){
-          characterInt_x = keypad.getKey()/100; // input in cm, converted to metres
-          character[0]=float(characterInt_x);
-        }
-        while (keypad.getKey()!= nextCoordMarker){
-          characterInt_y = keypad.getKey()/100; // input in cm, converted to metres
-          character[1]=float(characterInt_y);
-        }
-        while (keypad.getKey()!= nextCoordMarker){
-          characterInt_z = keypad.getKey()/100; // input in cm, converted to metres
-          character[2]=float(characterInt_z);
+      boolean nextCoordMarkerFlag = false;
+      for (int i=0; i<3; i++) {
+        while(nextCoordMarkerFlag == false) {
+          int key = int(keypad.getKey()); 
+          int keyAsNum = key - 48;
+          if (key) { // essential. without this it won't wait for user input and will endlessly enter 0 as default input 
+             if (keyAsNum == nextCoordMarker) {
+              nextCoordMarkerFlag = true;
+            }
+            else {
+              Serial.println("keyAsNum");
+              Serial.println(keyAsNum);
+              character[i] = keyAsNum/100; // input in cm, converted to metres
+              Serial.println("array");
+              Serial.println(character[i]);
+            }
+          } 
         }
         
-        if (counter < 3) {
-            Cp[counter] = character[counter];
-            counter++;
-        }
-        else {
-            Serial.print("The inputted coordinate is: "); // terminate the string
-            
-            Serial.print("x coordinate: "); // print out array
-            Serial.println(Cp[0]);
-            Serial.println("\ny coordinate: "); 
-            Serial.println(Cp[1]);
-            Serial.println("\nz coordinate: "); 
-            Serial.println(Cp[2]);
-            }
-            
+      }      
+//        if (counter < 3) {
+//            Cp[counter] = character[counter];
+//            counter++;
+//        }
+//        else {
+//            Serial.print("The inputted coordinate is: "); // terminate the string
+//            
+//            Serial.print("x coordinate: "); // print out array
+//            Serial.println(Cp[0]);
+//            Serial.println("\ny coordinate: "); 
+//            Serial.println(Cp[1]);
+//            Serial.println("\nz coordinate: "); 
+//            Serial.println(Cp[2]);
+//        }
+//            
             counter = 0; 
             newData = true;
-        }
+      }
 }
 
 // function to calculate the line length

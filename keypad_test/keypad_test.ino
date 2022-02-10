@@ -11,7 +11,7 @@ char keys[ROW_NUM][COLUMN_NUM] = {
   {'*','0','#', 'D'}
 };
 
-byte pin_rows[ROW_NUM] = {25, 26, 27, 28}; //connect to the row pinouts of the keypad
+byte pin_rows[ROW_NUM] = {25, 26, 37, 28}; //connect to the row pinouts of the keypad
 byte pin_column[COLUMN_NUM] = {29, 30, 31, 32}; //connect to the column pinouts of the keypad
 
 Keypad keypad = Keypad( makeKeymap(keys), pin_rows, pin_column, ROW_NUM, COLUMN_NUM );
@@ -23,7 +23,7 @@ void setup(){
 void loop(){
 
   int key = int(keypad.getKey());
-    int keyAsANumber = key - 48;
+  int keyAsANumber = key - 48;
 
 
   if (key){
