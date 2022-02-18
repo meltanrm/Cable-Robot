@@ -28,6 +28,8 @@ const byte ROWS = 4; //four rows
   byte colPins[COLS] = {29, 30, 31, 32}; //connect to the column pinouts of the keypad
 
   Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
+  String inputString;
+  long inputInt;
 
 
 
@@ -42,6 +44,9 @@ void setup() {
   pinMode(dirPinA, OUTPUT);
   pinMode(stepPinC, OUTPUT);
   pinMode(dirPinC, OUTPUT);
+ 
+  Serial.begin(9600);
+  inputString.reserve(10);
   
 }
 
@@ -54,14 +59,30 @@ void recvInputCoord() {
       boolean newData = false;
     
       while (Serial.available() > 0 && newData == false) {
-        character = (keypad.getKey())/100; // input in cm, converted to metres
+        character key = (keypad.getKey())/100; // input in cm, converted to metres
+        if (key) {
+         Serial.println(key);
+
+         if (key >= '0' && key <= '9') {     // only act on numeric keys
+           inputString += key;               // append new character to input string
+         } else if (key == '#') {
+           if (inputString.length() > 0) {
+             inputInt = inputString.toInt(); // YOU GOT AN INTEGER NUMBER
+             inputString = "";               // clear input
+
+
+           }
+         } else if (key == '*') {
+           inputString = "";                 // clear input
+         }
+       }
         
         if (counter < 4) {
             Cp[counter] = character[counter];
             counter++;
         }
         else {
-            Serial.print("The inputted coordinate is: "); // terminate the string
+            Serial.print("The input coordinate is: "); // terminate the string
             
             Serial.println("x coordinate: " Cp[0]); // print out array
             Serial.println("y coordinate: " Cp[1]); 
