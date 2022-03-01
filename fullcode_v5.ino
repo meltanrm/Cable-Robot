@@ -101,7 +101,7 @@ void loop() {
   float a1_1[] = { -70.785 / 100, -530 / 100, height_lower};
   float a1_2[] = {70.785 / 100, -530 / 100, height_lower};
   float a2_1[] = { -530 / 100, 224.26 / 100, height_lower};
-  float a2_2[] = { -530 / 1000, 387.731 / 1000, height_lower};
+  float a2_2[] = { -530 / 100, 387.731 / 100, height_lower};
   float a3_1[] = {530 / 100, 387.731 / 100, height_lower};
   float a3_2[] = {530 / 100, 224.26 / 100, height_lower};
 
