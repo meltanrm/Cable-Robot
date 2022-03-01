@@ -90,20 +90,20 @@ void loop() {
   // SHOULD ALL THESE BE 100 INSTEAD OF 1000?
 
   // coord of line rollers and vertices(for D)
-  float D_1[] = { -70.785 / 1000, -40.865 / 1000, height_upper};
-  float D_1atplat[] = { -70.785 / 1000, -40.865 / 1000, height_lower};
-  float D_2[] = {0, 80.736 / 1000, height_upper};
-  float D_2atplat[] = {0, 80.736 / 1000, height_lower};
-  float D_3[] = {70.785 / 1000, 40.865 / 1000, height_upper};
-  float D_3atplat[] = {70.785 / 1000, 40.865 / 1000, height_lower};
+  float D_1[] = { -70.785 / 100, -40.865 / 100, height_upper};
+  float D_1atplat[] = { -70.785 / 100, -40.865 / 100, height_lower};
+  float D_2[] = {0, 80.736 / 100, height_upper};
+  float D_2atplat[] = {0, 80.736 / 100, height_lower};
+  float D_3[] = {70.785 / 100, 40.865 / 100, height_upper};
+  float D_3atplat[] = {70.785 / 100, 40.865 / 100, height_lower};
 
   // coord of line anchors
-  float a1_1[] = { -70.785 / 1000, -530 / 1000, height_lower};
-  float a1_2[] = {70.785 / 1000, -530 / 1000, height_lower};
-  float a2_1[] = { -530 / 1000, 224.26 / 1000, height_lower};
+  float a1_1[] = { -70.785 / 100, -530 / 100, height_lower};
+  float a1_2[] = {70.785 / 100, -530 / 100, height_lower};
+  float a2_1[] = { -530 / 100, 224.26 / 100, height_lower};
   float a2_2[] = { -530 / 1000, 387.731 / 1000, height_lower};
-  float a3_1[] = {530 / 1000, 387.731 / 1000, height_lower};
-  float a3_2[] = {530 / 1000, 224.26 / 1000, height_lower};
+  float a3_1[] = {530 / 100, 387.731 / 100, height_lower};
+  float a3_2[] = {530 / 100, 224.26 / 100, height_lower};
 
   // line lengths at origin
   // only distance that is necessry is the line anchor to the platform vertex (we only care aboutchanges in lengths)
