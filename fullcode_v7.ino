@@ -227,34 +227,119 @@ void loop() {
     digitalWrite(stepPinD, LOW);
   }
 
-//  Find which motor corresponds to the lowest value
-
-//  Find which motor corresponds to the next lowest value
   for(int x = 0; x < stepsArray[1]; x++)
   {
-    digitalWrite(stepPin?, HIGH);
-    digitalWrite(stepPin?, HIGH);
-    digitalWrite(stepPin?, HIGH);
-    delayMicroseconds(4000);
-    digitalWrite(stepPin?, LOW);
-    digitalWrite(stepPin?, LOW);
-    digitalWrite(stepPin?, LOW);
+    if (stepsArray[1] > abs_a) {
+      digitalWrite(stepPinB, HIGH);
+      digitalWrite(stepPinC, HIGH);
+      digitalWrite(stepPinD, HIGH);
+      delayMicroseconds(4000);
+      digitalWrite(stepPinB, LOW);
+      digitalWrite(stepPinC, LOW);
+      digitalWrite(stepPinD, LOW);
+    }
+    if (stepsArray[1] > abs_b) {
+      digitalWrite(stepPinA, HIGH);
+      digitalWrite(stepPinC, HIGH);
+      digitalWrite(stepPinD, HIGH);
+      delayMicroseconds(4000);
+      digitalWrite(stepPinA, LOW);
+      digitalWrite(stepPinC, LOW);
+      digitalWrite(stepPinD, LOW);
+    }
+    if (stepsArray[1] > abs_c) {
+      digitalWrite(stepPinA, HIGH);
+      digitalWrite(stepPinB, HIGH);
+      digitalWrite(stepPinD, HIGH);
+      delayMicroseconds(4000);
+      digitalWrite(stepPinA, LOW);
+      digitalWrite(stepPinB, LOW);
+      digitalWrite(stepPinD, LOW);
+    }
+    if (stepsArray[1] > abs_d) {
+      digitalWrite(stepPinA, HIGH);
+      digitalWrite(stepPinB, HIGH);
+      digitalWrite(stepPinC, HIGH);
+      delayMicroseconds(4000);
+      digitalWrite(stepPinA, LOW);
+      digitalWrite(stepPinB, LOW);
+      digitalWrite(stepPinC, LOW);
+    }
+    
   }
 
   for(int x = 0; x < stepsArray[2]; x++)
   {
-    digitalWrite(stepPin?, HIGH);
-    digitalWrite(stepPin?, HIGH);
-    delayMicroseconds(4000);
-    digitalWrite(stepPin?, LOW);
-    digitalWrite(stepPin?, LOW);
+    if (stepsArray[2] >= (abs_a && abs_b)) {
+      digitalWrite(stepPinC, HIGH);
+      digitalWrite(stepPinD, HIGH);
+      delayMicroseconds(4000);
+      digitalWrite(stepPinC, LOW);
+      digitalWrite(stepPinD, LOW);
+    }
+
+    if (stepsArray[2] >= (abs_a && abs_c)) {
+      digitalWrite(stepPinB, HIGH);
+      digitalWrite(stepPinD, HIGH);
+      delayMicroseconds(4000);
+      digitalWrite(stepPinB, LOW);
+      digitalWrite(stepPinD, LOW);
+    }
+
+    if (stepsArray[2] >= (abs_a && abs_d)) {
+      digitalWrite(stepPinB, HIGH);
+      digitalWrite(stepPinC, HIGH);
+      delayMicroseconds(4000);
+      digitalWrite(stepPinB, LOW);
+      digitalWrite(stepPinC, LOW);
+    }
+    if (stepsArray[2] >= (abs_b && abs_c)) {
+      digitalWrite(stepPinA, HIGH);
+      digitalWrite(stepPinD, HIGH);
+      delayMicroseconds(4000);
+      digitalWrite(stepPinA, LOW);
+      digitalWrite(stepPinD, LOW);
+    }
+    if (stepsArray[2] >= (abs_b && abs_d)) {
+      digitalWrite(stepPinA, HIGH);
+      digitalWrite(stepPinC, HIGH);
+      delayMicroseconds(4000);
+      digitalWrite(stepPinA, LOW);
+      digitalWrite(stepPinC, LOW);
+    }
+    if (stepsArray[2] >= (abs_c && abs_d)) {
+      digitalWrite(stepPinA, HIGH);
+      digitalWrite(stepPinB, HIGH);
+      delayMicroseconds(4000);
+      digitalWrite(stepPinA, LOW);
+      digitalWrite(stepPinB, LOW);
+    }
+
   }
 
   for(int x = 0; x < stepsArray[3]; x++)
   {
-    digitalWrite(stepPin?, HIGH);
-    delayMicroseconds(4000);
-    digitalWrite(stepPin?, LOW);
+    if (stepsArray[3] == abs_a) {
+      digitalWrite(stepPinA, HIGH);
+      delayMicroseconds(4000);
+      digitalWrite(stepPinA, LOW);
+    }
+    if (stepsArray[3] == abs_b) {
+      digitalWrite(stepPinB, HIGH);
+      delayMicroseconds(4000);
+      digitalWrite(stepPinB, LOW);
+    }
+    if (stepsArray[3] == abs_c) {
+      digitalWrite(stepPinC, HIGH);
+      delayMicroseconds(4000);
+      digitalWrite(stepPinC, LOW);
+    }
+    if (stepsArray[3] == abs_d) {
+      digitalWrite(stepPinD, HIGH);
+      delayMicroseconds(4000);
+      digitalWrite(stepPinD, LOW);
+    }
+
   }
     
 
