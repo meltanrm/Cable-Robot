@@ -7,6 +7,7 @@ const int stepPinA = 11;
 const int dirPinC = 12; // motor C
 const int stepPinC = 13;
 const int stepsPerRevolution = 200;
+float Cp[3] = {0, 0, 0};
 
 void setup() {
   Serial.begin(9600);
@@ -27,30 +28,29 @@ void recvInputCoord() {
   float x_coord;
   float y_coord;
   float z_coord;
-  float Cp[3] = {0, 0, 0};
+//  float Cp[3] = {0, 0, 0};
   Serial.begin(9600);
 
   Serial.println("Please input X coordinate: ");
   while (Serial.available() == 0) {
   }
   x_coord = Serial.parseInt();
-//  delayMicroseconds(100000);
-//  Serial.println(x_coord);
+  Serial.println(x_coord);
 
 
+  //delay(5000);
   Serial.println("Please input Y coordinate: "); //Prompt User for Input
   while (Serial.available() == 0) {
   }
   y_coord = Serial.parseInt();
-//  delayMicroseconds(100000);
-//  Serial.println(y_coord);
+  Serial.println(y_coord);
 
+  //delay(5000);
   Serial.println("Please input Z coordinate: "); //Prompt User for Input
   while (Serial.available() == 0) {
   }
   z_coord = Serial.parseInt();
-//  delayMicroseconds(100000);
-//  Serial.println(z_coord);
+  Serial.println(z_coord);
 
   // From cm to metres
   Cp[0] = x_coord/100;
@@ -58,10 +58,10 @@ void recvInputCoord() {
   Cp[2] = z_coord/100;
 
 
-//  Serial.println("Your input coordinates are: ");
-//  Serial.println(x_coord);
-//  Serial.println(y_coord);
-//  Serial.println(z_coord);
+  Serial.println("Your input coordinates are: ");
+  Serial.println(x_coord);
+  Serial.println(y_coord);
+  Serial.println(z_coord);
 }
 
 // Function calculates line length
@@ -83,13 +83,10 @@ int cmpfunc (const void * a, const void * b) {
 void loop() {
   float lineLength(float coord1[], float coord2[]);
 
-  float Cp[3] = {0, 0, 0};// declare array to store input coordinates
-
 
   float height_upper = 1.397; // height (in metres) from top board to level with frame (0.038m above the ground)
   float height_lower = 0; // height
 
-  // SHOULD ALL THESE BE 100 INSTEAD OF 1000?
 
   // coord of line rollers and vertices(for D)
   float D_1[] = { -70.785 / 100, -40.865 / 100, height_upper};
@@ -162,58 +159,57 @@ void loop() {
   int motorSteps_b1 = ((lineDiffb1) / (spoolCirc)) * 8.45 * 200;
   int motorSteps_c1 = ((lineDiffc1) / (spoolCirc)) * 8.45 * 200;
   int motorSteps_d1 = ((lineDiffd1) / (spoolCirc)) * 8.45 * 200;
+  
+  Serial.println(motorSteps_a1);
+  Serial.println(motorSteps_b1);
+  Serial.println(motorSteps_c1);
+  Serial.println(motorSteps_d1);
 
   int abs_a = abs(motorSteps_a1);
   int abs_b = abs(motorSteps_b1);
   int abs_c = abs(motorSteps_c1);
   int abs_d = abs(motorSteps_d1);
   int stepsArray[] = {abs_a,abs_b,abs_c,abs_d};
-  qsort(stepsArray,4, sizeof(stepsArray), cmpfunc); // This sorts array in ascending order
-
-// Compare all 4 values to find highest
-// Currently don't use this function, using qsort array instead
-  int lowVal = stepsArray[0];
-  for (int n = 0; n < 4; n++) {
-   if (stepsArray[n] < lowVal) {
-        lowVal = stepsArray[n];
-   }
+  Serial.println("Unsorted array: ");
+  for (int i = 0; i < 4; i++) {
+    Serial.println(stepsArray[i]);
+  }
+  
+  qsort(stepsArray,4, sizeof(stepsArray[0]), cmpfunc); // This sorts array in ascending order
+  Serial.println("Sorted array: ");
+  for (int i = 0; i < 4; i++) {
+    Serial.println(stepsArray[i]);
   }
 
-//  COUNTERS
-  int count_a = 0;
-  int count_b = 0;
-  int count_c = 0;
-  int count_d = 0;
-
   //  SET CLOCKWISE OR ANTICLOCKWISE
-    if (lineDiffa1 > 0){
+    if (lineDiffa1 >= 0){
       digitalWrite(dirPinA, HIGH);
     }
     else {
       digitalWrite(dirPinA, LOW);
     }
     
-    if (lineDiffb1 > 0){
+    if (lineDiffb1 >= 0){
       digitalWrite(dirPinB, HIGH);
     }
     else {
       digitalWrite(dirPinB, LOW);
     }
     
-    if (lineDiffc1 > 0){
+    if (lineDiffc1 >= 0){
       digitalWrite(dirPinC, HIGH);
     }
     else {
       digitalWrite(dirPinC, LOW);
     }
     
-    if (lineDiffd1 > 0){
+    if (lineDiffd1 >= 0){
       digitalWrite(dirPinD, HIGH);
     }
     else {
       digitalWrite(dirPinD, LOW);
     }
-  
+
   for(int x = 0; x < stepsArray[0]; x++)
   {
     digitalWrite(stepPinA, HIGH);
@@ -270,7 +266,7 @@ void loop() {
 
   for(int x = 0; x < stepsArray[2]; x++)
   {
-    if (stepsArray[2] >= (abs_a && abs_b)) {
+    if ((stepsArray[2] > abs_a) && (stepsArray[2] > abs_b)) {
       digitalWrite(stepPinC, HIGH);
       digitalWrite(stepPinD, HIGH);
       delayMicroseconds(4000);
@@ -278,7 +274,7 @@ void loop() {
       digitalWrite(stepPinD, LOW);
     }
 
-    if (stepsArray[2] >= (abs_a && abs_c)) {
+    if ((stepsArray[2] > abs_a) && (stepsArray[2] > abs_c)) {
       digitalWrite(stepPinB, HIGH);
       digitalWrite(stepPinD, HIGH);
       delayMicroseconds(4000);
@@ -286,28 +282,28 @@ void loop() {
       digitalWrite(stepPinD, LOW);
     }
 
-    if (stepsArray[2] >= (abs_a && abs_d)) {
+    if ((stepsArray[2] > abs_a) && (stepsArray[2] > abs_d)) {
       digitalWrite(stepPinB, HIGH);
       digitalWrite(stepPinC, HIGH);
       delayMicroseconds(4000);
       digitalWrite(stepPinB, LOW);
       digitalWrite(stepPinC, LOW);
     }
-    if (stepsArray[2] >= (abs_b && abs_c)) {
+    if ((stepsArray[2] > abs_b) && (stepsArray[2] > abs_c)) {
       digitalWrite(stepPinA, HIGH);
       digitalWrite(stepPinD, HIGH);
       delayMicroseconds(4000);
       digitalWrite(stepPinA, LOW);
       digitalWrite(stepPinD, LOW);
     }
-    if (stepsArray[2] >= (abs_b && abs_d)) {
+    if ((stepsArray[2] > abs_b) && (stepsArray[2] > abs_d)) {
       digitalWrite(stepPinA, HIGH);
       digitalWrite(stepPinC, HIGH);
       delayMicroseconds(4000);
       digitalWrite(stepPinA, LOW);
       digitalWrite(stepPinC, LOW);
     }
-    if (stepsArray[2] >= (abs_c && abs_d)) {
+    if ((stepsArray[2] > abs_c) && (stepsArray[2] > abs_d)) {
       digitalWrite(stepPinA, HIGH);
       digitalWrite(stepPinB, HIGH);
       delayMicroseconds(4000);
