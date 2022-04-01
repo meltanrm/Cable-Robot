@@ -23,11 +23,11 @@ void setup() {
    
   //B rising pulse from encodenren activated ai1(). AttachInterrupt 1 is DigitalPin nr 3 on moust Arduino.
   attachInterrupt(1, ai1, RISING);
-  }
+}
    
-  void loop() {
+void loop() {
   // Send the value of counter
-    if( counter != temp ){
+    if( counter != temp ) {
       Serial.println (counter);
       temp = counter;
     }
@@ -43,7 +43,8 @@ void setup() {
       delayMicroseconds(1000);
       digitalWrite(stepPin1, LOW);
       delayMicroseconds(1000);      
-    }else{
+    } 
+    else {
       counter--;
       digitalWrite(dirPin1, LOW);
       digitalWrite(stepPin1, LOW);
@@ -58,7 +59,9 @@ void setup() {
     // Check with pin 18 to determine the direction
     if(digitalRead(CLK)==LOW) {
       counter--;
-    }else{
+    } 
+    else {
       counter++;
     }
   }
+}
