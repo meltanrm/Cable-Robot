@@ -162,22 +162,22 @@ void loop() {
   Serial.println(lineDiffd1);
   
   // for each of the below, a1 and a2 should be equal, same for b1 and b2, and c1 and c2
-  int motorSteps_a1 = ((lineDiffa1) / (spoolCirc)) * 8.45 * 200; // 8.45 turns of motor is one turn of spool; motor has 200 steps per turn 
-  int motorSteps_b1 = ((lineDiffb1) / (spoolCirc)) * 8.45 * 200;
-  int motorSteps_c1 = ((lineDiffc1) / (spoolCirc)) * 8.45 * 200;
-  int motorSteps_d1 = ((lineDiffd1) / (spoolCirc)) * 8.45 * 200;
+  int motorSteps_a1 = ((lineDiffa1) / (spoolCirc)) * 10 * 200; // 10 turns of motor is one turn of spool; motor has 200 steps per turn 
+  int motorSteps_b1 = ((lineDiffb1) / (spoolCirc)) * 10 * 200;
+  int motorSteps_c1 = ((lineDiffc1) / (spoolCirc)) * 10 * 200;
+  int motorSteps_d1 = ((lineDiffd1) / (spoolCirc)) * 10 * 200;
   
   Serial.println("motor steps for D:");
   Serial.println(motorSteps_d1);
 
-  int abs_a = 100*8.45; // must be given in terms of motorSteps*8.45
-  int abs_b = 100*8.45;
-  int abs_c = 100*8.45;
-  int abs_d = 100*8.45;
-  //int abs_a = abs(motorSteps_a1);
-  //int abs_b = abs(motorSteps_b1);
-  //int abs_c = abs(motorSteps_c1);
-  //int abs_d = abs(motorSteps_d1);
+ // int abs_a = 0;//200*10; // must be given in terms of motorSteps*10 for trials
+ // int abs_b = 0;//200*10;
+ // int abs_c = 0;//200*10;
+ // int abs_d = 0;//200*10; 
+  int abs_a = abs(motorSteps_a1);
+  int abs_b = abs(motorSteps_b1);
+  int abs_c = abs(motorSteps_c1);
+  int abs_d = abs(motorSteps_d1);
   
   int stepsArray[] = {abs_a,abs_b,abs_c,abs_d};
   
@@ -197,10 +197,6 @@ void loop() {
   
   Serial.println("Highest value of motor steps:");
   Serial.println(highVal);
-
- // lineDiffb1 = -3;
- // Serial.println("Set line diff:");
- // Serial.println(lineDiffb1);
   
 //  COUNTERS
   int count_a = 0;
@@ -238,15 +234,9 @@ void loop() {
       digitalWrite(dirPinD, LOW);
     }
     
-//    LOOP donde sigue hasta que llegue al valor de su counter
+//    LOOP continues until value of counter reaches motorsteps
 //    For all 4: IF - high, delay,low
-//    do it with "quickly" structure
-//    Need several IFs because they have to all be high, then all delay, then all low
 
-// try it just for motor a
-// println abs_a, count_a
-// println before steppin high in if statements below
-// check highVal above, print, set value
 
     if (count_a < abs_a) {
      // Serial.println("motor A moves");
