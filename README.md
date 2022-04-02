@@ -1,4 +1,4 @@
-# ants-motor
+# Cable-Robot
 
 In this repo, you will find:
 - Stl files of 3D printed parts that will enable you to make your cable robot.
