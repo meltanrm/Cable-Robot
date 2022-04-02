@@ -1,17 +1,27 @@
+//**********************************************************************************
+// This code can be used to test the motors.
+ 
+// If the electronic circuit is correctly set up, the motors should repeatedly move:
+// - One full rotation clockwise (slowly).
+// - One full rotation counterclockwise (quickly).
+
+// Make sure to check that the step and dir pins are in agreement with your circuit.
+//**********************************************************************************
+
 // Define pin connections & motor's steps per revolution
-const int dirPin1 = 6; // motor B 
+const int dirPin1 = 6;
 const int stepPin1 = 7;
-const int dirPin2 = 8; // motor D spool
+const int dirPin2 = 8;
 const int stepPin2 = 9;
-const int dirPin3 = 10; // motor A
+const int dirPin3 = 10;
 const int stepPin3 = 11;
-const int dirPin4 = 12; // motor C
+const int dirPin4 = 12;
 const int stepPin4 = 13;
 const int stepsPerRevolution = 200;
 
 void setup()
 {
-  // Declare pins as Outputs
+  // Declare pins as outputs
   pinMode(stepPin1, OUTPUT);
   pinMode(dirPin1, OUTPUT);
   pinMode(stepPin2, OUTPUT);
