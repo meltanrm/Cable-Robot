@@ -1,7 +1,7 @@
 # Cable-Robot
 
 In this repo, you will find:
-- Stl files of 3D printed parts that will enable you to make your cable robot (under Stl_files, Prototype and Final_frame designs).
+- Stl files of 3D printed parts that will enable you to make your cable robot (under Stl_files, Camera_mount, Prototype and Final_frame designs).
 - Code to test the electronic setup for your cable robot (in the Electronics_testing_code folder), which you are recommended to go through in the following order:
   1. Test_motors
   2. Test_encoder
