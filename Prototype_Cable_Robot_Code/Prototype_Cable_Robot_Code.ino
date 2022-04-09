@@ -1,4 +1,4 @@
-// set serial monitor settings (newline--> no line ending)
+// set serial monitor settings (newline --> no line ending)
 
 const int dirPinB = 6; // motor B
 const int stepPinB = 7;
@@ -40,13 +40,13 @@ void recvInputCoord() {
   x_coord = Serial.parseInt();
   Serial.println(x_coord);
 
-  Serial.println("Please input Y coordinate: "); //Prompt User for Input
+  Serial.println("Please input Y coordinate: "); // Prompt User for Input
   while (Serial.available() == 0) {
   }
   y_coord = Serial.parseInt();
   Serial.println(y_coord);
 
-  Serial.println("Please input Z coordinate: "); //Prompt User for Input
+  Serial.println("Please input Z coordinate: "); // Prompt User for Input
   while (Serial.available() == 0) {
   }
   z_coord = Serial.parseInt();
@@ -97,7 +97,7 @@ void loop() {
   float a3_2[] = {530 / 10, 224.26 / 10, height_lower};
 
   // line lengths at origin
-  // only distance that is necessry is the line anchor to the platform vertex (we only care aboutchanges in lengths)
+  // only distance that is necessry is the line anchor to the platform vertex (we only care about changes in lengths)
   float l_a1_0 = lineLength(a2_1, D_1atplat);
   float l_a2_0 = lineLength(a2_2, D_2atplat);
   float l_b1_0 = lineLength(a1_1, D_3atplat);
@@ -112,7 +112,7 @@ void loop() {
 
   recvInputCoord(); // receives input coordinates in cm, converted to metres in function
 
-  // coordinates of triangle platform vertices wrt center of platform, Cp
+  // coordinates of triangle platform vertices with respect to the center of platform, Cp
   float V_1[] = {D_1[0] + Cp[0], D_1[1] + Cp[1], 0 + Cp[2]}; // lined up with D_1
   float V_2[] = {D_2[0] + Cp[0], D_2[1] + Cp[1], 0 + Cp[2]}; // lined up with D_2
   float V_3[] = {D_3[0] + Cp[0], D_3[1] + Cp[1], 0 + Cp[2]}; // lined up with D_3
@@ -131,18 +131,18 @@ void loop() {
   float l_d3 = lineLength(V_3, D_3);
 
   // calculate difference between desired lengths and current lengths
-  float lineDiffa1 = l_a1 - l_a1_0; // repeatd for all other lines
+  float lineDiffa1 = l_a1 - l_a1_0; // repeated for all other lines
   float lineDiffa2 = l_a2 - l_a2_0;
   float lineDiffb1 = l_b1 - l_b1_0;
   float lineDiffb2 = l_b2 - l_b2_0;
   float lineDiffc1 = l_c1 - l_c1_0;
   float lineDiffc2 = l_c2 - l_c2_0;
-  float lineDiffd1 = l_d1 - l_d1_0; // LINE DIFF FOR D
+  float lineDiffd1 = l_d1 - l_d1_0; // lineDiff for D
   float lineDiffd2 = l_d2 - l_d2_0;
   float lineDiffd3 = l_d3 - l_d3_0;
 
   // find the corresponding rotations required
-  float spoolDiameter = 11; // cm
+  float spoolDiameter = 11; // in cm
   float spoolCirc = PI * spoolDiameter;
 
   // for each of the below, a1 and a2 should be equal, same for b1 and b2, and c1 and c2
@@ -181,7 +181,7 @@ void loop() {
   int count_d = 0;
   
   for(int x = 0; x < highVal; x++){
-//  SET CLOCKWISE OR ANTICLOCKWISE
+//  set clockwise or anticlockwise
     if (lineDiffa1 > 0){
       digitalWrite(dirPinA, LOW);
     }
@@ -210,10 +210,8 @@ void loop() {
       digitalWrite(dirPinD, LOW);
     }
     
-//    LOOP continues until value of counter reaches motorsteps
-//    For all 4: IF - high, delay,low
-
-
+//  LOOP continues until value of counter reaches motorsteps
+//  For all 4: IF - high, delay,low
     if (count_a < abs_a) {
      // Serial.println("motor A moves");
       digitalWrite(stepPinA, HIGH);
@@ -270,7 +268,7 @@ void loop() {
     }
    
 
-//    Update counters
+//  Update counters
     count_a = count_a + 1;
     count_b = count_b + 1;
     count_c = count_c + 1;
@@ -278,7 +276,7 @@ void loop() {
     
   }
 
-  // reassign values of lengths
+//  reassign values of lengths
 
   l_a1_0 = l_a1;
   l_a2_0 = l_a2;
