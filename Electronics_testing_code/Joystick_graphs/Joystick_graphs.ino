@@ -23,7 +23,7 @@ void loop() {
   int z = analogRead(A2);
 //  int btn = analogRead(A3);  
 
-  String st = String(x) + " " + String(y) + " " + String(z) // + " " + String(btn);
+  String st = String(x) + " " + String(y) + " " + String(z); // + " " + String(btn);
   Serial.println(st);
   delay(10);
 }
