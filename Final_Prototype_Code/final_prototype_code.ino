@@ -1,4 +1,4 @@
-// Code to move final prototype of cable robot - 5 May 2022
+// Code to move final prototype of cable robot - 5th May 2022
 
 // THIS IS JUST THE TEMPLATE - COORDINATES AND MEASUREMENTS STILL TO BE ADDED
 
