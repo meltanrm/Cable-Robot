@@ -38,21 +38,49 @@ void setup() {
 
 void recvInputCoord() {
 
-  Serial.println("Please input X coordinate: "); //Prompt User for Input
-  while (Serial.available() == 0) {
-  }
-  P[0] = Serial.parseInt();
+  float bounds_x[] = {-335,280};
+  float bounds_y[] = {-505,505};
+  float bounds_z[] = {270,550};
+  
+  bool dum = true;
 
-  Serial.println("Please input Y coordinate: "); //Prompt User for Input
-  while (Serial.available() == 0) {
-  }
-  P[1] = Serial.parseInt();
+  while(dum){
+    int counter = 0;
+    Serial.println("Please input X coordinate: "); //Prompt User for Input
+    while (Serial.available() == 0) {
+    }
+    P[0] = Serial.parseInt();
+  
+    Serial.println("Please input Y coordinate: "); //Prompt User for Input
+    while (Serial.available() == 0) {
+    }
+    P[1] = Serial.parseInt();
+  
+    Serial.println("Please input Z coordinate: "); //Prompt User for Input
+    while (Serial.available() == 0) {
+    }
+    P[2] = Serial.parseInt();
 
-  Serial.println("Please input Z coordinate: "); //Prompt User for Input
-  while (Serial.available() == 0) {
-  }
-  P[2] = Serial.parseInt();
+    if (P[0] < bounds_x[0]) || (P[0] > bounds_x[1]) {
+      counter++
+    }
+    if (P[1] < bounds_y[0]) || (P[1] > bounds_y[1]) {
+      counter++
+    }
+    if (P[2] < bounds_z[0]) || (P[2] > bounds_z[1]) {
+      counter++
+    }
+    if (counter == 0) {
+      dum = false;
+    }
 
+    Serial.println("Sorry, you input was out of bounds.");
+    Serial.println("Please input coordinates within the boundaries.");
+    Serial.println("X bounds: -335 to 280 cm");
+    Serial.println("Y bounds: -505 to 505 cm");
+    Serial.println("Z bounds: 270 to 550 cm"); 
+  }
+  
   Serial.println("Your input coordinates are: ");
   Serial.println(P[0]);
   Serial.println(P[1]);
