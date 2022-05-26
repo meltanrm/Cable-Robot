@@ -61,14 +61,14 @@ void recvInputCoord() {
     }
     P[2] = Serial.parseInt();
 
-    if (P[0] < bounds_x[0]) || (P[0] > bounds_x[1]) {
-      counter++
+    if ((P[0] < bounds_x[0]) || (P[0] > bounds_x[1])) {
+      counter++;
     }
-    if (P[1] < bounds_y[0]) || (P[1] > bounds_y[1]) {
-      counter++
+    if ((P[1] < bounds_y[0]) || (P[1] > bounds_y[1])) {
+      counter++;
     }
-    if (P[2] < bounds_z[0]) || (P[2] > bounds_z[1]) {
-      counter++
+    if ((P[2] < bounds_z[0]) || (P[2] > bounds_z[1])) {
+      counter++;
     }
     if (counter == 0) {
       dum = false;
