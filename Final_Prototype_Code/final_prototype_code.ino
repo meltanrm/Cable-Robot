@@ -106,7 +106,7 @@ void loop() {
      float lineLength(float coord1[], float coord2[]);
 
   // Height of prototype
-    float height = 
+    float height = 564.196;
 
   // Coordinates of line rollers
 
@@ -118,15 +118,15 @@ void loop() {
     // Two cables (1 and 2) come from each of the spools (A to C)
     // Three cables come from spool D
     // Distance calculated: line anchors to platform vertices
-      float cable_a1_0
-      float cable_a2_0
-      float cable_b1_0
-      float cable_b2_0
-      float cable_c1_0
-      float cable_c2_0
-      float cable_d1_0 = height; // Applies only at start when cables are vertical
-      float cable_d2_0 = height; 
-      float cable_d3_0 = height;
+      float l_a1_0 = 475.885;
+      float l_a2_0 = 475.885;
+      float l_b1_0 = 475.885;
+      float l_b2_0 = 475.885;
+      float l_c1_0 = 475.885;
+      float l_c2_0 = 475.885;
+      float l_d1_0 = height; // Applies only at start when cables are vertical
+      float l_d2_0 = height; 
+      float l_d3_0 = height;
   
   // Receives input coordinates
   recvInputCoord();
@@ -138,15 +138,15 @@ void loop() {
 
  // Cable lengths at new position
     // Distance calculated: line anchors to platform vertices
-    float cable_a1
-    float cable_a2
-    float cable_b1
-    float cable_b2
-    float cable_c1
-    float cable_c2
-    float cable_d1
-    float cable_d2
-    float cable_d3
+    float l_a1 = (abs(v1[0]-286.891)^2 + abs(v1[1] - 412.129)^2 + abs(v1[2]-266)^2)^(1/2);
+    float l_a2 = (abs(v1[0]-112.757)^2 + abs(v1[1] - 512.665)^2 + abs(v1[2]-266)^2)^(1/2);
+    float l_b1 = (abs(v2[0]-286.891)^2 + abs(v2[1] - 412.129)^2 + abs(v2[2]-266)^2)^(1/2);
+    float l_b2 = (abs(v2[0]-112.757)^2 + abs(v2[1] - 512.665)^2 + abs(v2[2]-266)^2)^(1/2);
+    float l_c1 = (abs(v3[0]-340)^2 + abs(v3[1] - 100.536)^2 + abs(v3[2]-266)^2)^(1/2);
+    float l_c2 = (abs(v3[0]-340)^2 + abs(v3[1] - 100.536)^2 + abs(v3[2]-266)^2)^(1/2);
+    float l_d1 = (266 - v1[2]);
+    float l_d2 = (266 - v2[2]);
+    float l_d3 = (266 - v3[2]);
 
  // Calculate cable length difference: desired length - current length
     // Only required to be calculated for one cable per spool - works geometrically 
