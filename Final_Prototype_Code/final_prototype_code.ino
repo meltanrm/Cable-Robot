@@ -8,14 +8,14 @@
 // All coordinates, cable lengths and spool dimensions are in cm
 
 // Pins and motors set-up: direction and steps
-  const int dirPinA =  // motor A
-  const int stepPinA =
-  const int dirPinB =  // motor B
-  const int stepPinB = 
-  const int dirPinC =  // motor C
-  const int stepPinC = 
-  const int dirPinD = // motor D spool
-  const int stepPinD = 
+  const int dirPinA = 10; // motor A
+  const int stepPinA = 11;
+  const int dirPinB = 6; // motor B
+  const int stepPinB = 7;
+  const int dirPinC = 12; // motor C
+  const int stepPinC = 13;
+  const int dirPinD = 8; // motor D spool
+  const int stepPinD = 9;
 
 // Initialising coordinates of platform
 float P[3] = {0, 0, 0};
@@ -38,9 +38,9 @@ void setup() {
 
 void recvInputCoord() {
 
-  float bounds_x[] = {-335,280};
-  float bounds_y[] = {-505,505};
-  float bounds_z[] = {270,550};
+  float bounds_x[] = {-33.5,28.0};
+  float bounds_y[] = {-50.5,50.5};
+  float bounds_z[] = {27.0,55.0};
   
   bool dum = true;
 
@@ -76,9 +76,9 @@ void recvInputCoord() {
 
     Serial.println("Sorry, you input was out of bounds.");
     Serial.println("Please input coordinates within the boundaries.");
-    Serial.println("X bounds: -335 to 280 cm");
-    Serial.println("Y bounds: -505 to 505 cm");
-    Serial.println("Z bounds: 270 to 550 cm"); 
+    Serial.println("X bounds: -33.5 to 28.0 cm");
+    Serial.println("Y bounds: -50.5 to 50.5 cm");
+    Serial.println("Z bounds: 27.0 to 55.0 cm"); 
   }
   
   Serial.println("Your input coordinates are: ");
@@ -103,50 +103,74 @@ float cableLength(float coord1[3], float coord2[3]) {
 void loop() {
 
   // Initialise cableLength function
-     float lineLength(float coord1[], float coord2[]);
+     float cableLength(float coord1[], float coord2[]);
 
   // Height of prototype
-    float height = 564.196;
+    float height_upper = 56.4196 - 26.6; // relative to height of line anchors
+    float height_lower = 0; // height of line anchors set as zero
 
-  // Coordinates of line rollers
+  // Coordinates of line rollers for D spool (used below)
+    float D1[] = {4.8948, 0, height_upper};
+    float D2[] = {-12.5185, -10.0536, height_upper};
+    float D3[] = {-12.5185, 10.0536, height_upper};
 
   // Coordinates of platform vertices at starting position
+    float P1_0[]= {D1[0], D1[1], height_lower};
+    float P2_0[]= {D2[0], D2[1], height_lower};
+    float P3_0[]= {D3[0], D3[1], height_lower};
 
   // Coordinates of line anchors
+    float a1 = {28.6891, -41.2129, height_lower};
+    float a2 = {11.2757, -51.2665, height_lower};
+    float b1 = {28.6891, 41.2129, height_lower};
+    float b2 = {11.2757, 51.2665, height_lower};
+    float c1 = {-34.0, -10.0536, height_lower};
+    float c2 = {-34.0, 10.0536, height_lower};
 
   // Cable lengths at starting point
     // Two cables (1 and 2) come from each of the spools (A to C)
     // Three cables come from spool D
     // Distance calculated: line anchors to platform vertices
-      float l_a1_0 = 475.885;
-      float l_a2_0 = 475.885;
-      float l_b1_0 = 475.885;
-      float l_b2_0 = 475.885;
-      float l_c1_0 = 475.885;
-      float l_c2_0 = 475.885;
+      float l_a1_0 = 47.5885;
+      float l_a2_0 = 47.5885;
+      float l_b1_0 = 47.5885;
+      float l_b2_0 = 47.5885;
+      float l_c1_0 = 21.4815;
+      float l_c2_0 = 21.4815;
       float l_d1_0 = height; // Applies only at start when cables are vertical
       float l_d2_0 = height; 
       float l_d3_0 = height;
   
   // Receives input coordinates
-  recvInputCoord();
+    recvInputCoord();
 
   // Coordinates of 3 platform vertices at new position
-    float v1[] = {D_1[0] + P[0], D_1[1] + P[1], 0 + P[2]};
-    float v2[] = {D_2[0] + P[0], D_2[1] + P[1], 0 + P[2]}; 
-    float v3[] = {D_3[0] + P[0], D_3[1] + P[1], 0 + P[2]};
+    float v1[] = {D1[0] + P[0], D1[1] + P[1], D1[2] + P[2]};
+    float v2[] = {D2[0] + P[0], D2[1] + P[1], D2[2] + P[2]}; 
+    float v3[] = {D3[0] + P[0], D3[1] + P[1], D3[2] + P[2]};
 
  // Cable lengths at new position
     // Distance calculated: line anchors to platform vertices
-    float l_a1 = (abs(v1[0]-286.891)^2 + abs(v1[1] - 412.129)^2 + abs(v1[2]-266)^2)^(1/2);
-    float l_a2 = (abs(v1[0]-112.757)^2 + abs(v1[1] - 512.665)^2 + abs(v1[2]-266)^2)^(1/2);
-    float l_b1 = (abs(v2[0]-286.891)^2 + abs(v2[1] - 412.129)^2 + abs(v2[2]-266)^2)^(1/2);
-    float l_b2 = (abs(v2[0]-112.757)^2 + abs(v2[1] - 512.665)^2 + abs(v2[2]-266)^2)^(1/2);
-    float l_c1 = (abs(v3[0]-340)^2 + abs(v3[1] - 100.536)^2 + abs(v3[2]-266)^2)^(1/2);
-    float l_c2 = (abs(v3[0]-340)^2 + abs(v3[1] - 100.536)^2 + abs(v3[2]-266)^2)^(1/2);
-    float l_d1 = (266 - v1[2]);
-    float l_d2 = (266 - v2[2]);
-    float l_d3 = (266 - v3[2]);
+    float l_a1 = cableLength(a1, v1);
+    float l_a2 = cableLength(a2, v2);
+    float l_b1 = cableLength(b1, v1);
+    float l_b2 = cableLength(b2, v3);
+    float l_c1 = cableLength(c1, v2);
+    float l_c2 = cableLength(c2, v3);
+    float l_d1 = cableLength(v1, D1);
+    float l_d2 = cableLength(v2, D2);
+    float l_d3 = cableLength(v3, D3);
+      
+    /*  float l_a1 = (abs(v1[0]-286.891)^2 + abs(v1[1] - 412.129)^2 + abs(v1[2]-266)^2)^(1/2);
+        float l_a2 = (abs(v1[0]-112.757)^2 + abs(v1[1] - 512.665)^2 + abs(v1[2]-266)^2)^(1/2);
+        float l_b1 = (abs(v2[0]-286.891)^2 + abs(v2[1] - 412.129)^2 + abs(v2[2]-266)^2)^(1/2);
+        float l_b2 = (abs(v2[0]-112.757)^2 + abs(v2[1] - 512.665)^2 + abs(v2[2]-266)^2)^(1/2);
+        float l_c1 = (abs(v3[0]-340)^2 + abs(v3[1] - 100.536)^2 + abs(v3[2]-266)^2)^(1/2);
+        float l_c2 = (abs(v3[0]-340)^2 + abs(v3[1] - 100.536)^2 + abs(v3[2]-266)^2)^(1/2);
+        float l_d1 = (266 - v1[2]);
+        float l_d2 = (266 - v2[2]);
+        float l_d3 = (266 - v3[2]);
+    */
 
  // Calculate cable length difference: desired length - current length
     // Only required to be calculated for one cable per spool - works geometrically 
@@ -157,7 +181,7 @@ void loop() {
 
  // Moving the motors by desired amount
     // Finding the corresponding rotations required
-    float spoolDiameter = 
+    float spoolDiameter = 11;
     float spoolCirc = PI * spoolDiameter;
     
     // 200 motor steps per motor turn --> 10 motor turns = 1 spool turn
