@@ -40,7 +40,7 @@ void recvInputCoord() {
 
   float bounds_x[] = {-33.5,28.0};
   float bounds_y[] = {-50.5,50.5};
-  float bounds_z[] = {27.0,55.0};
+  float bounds_z[] = {0,30};
   
   bool dum = true;
 
@@ -78,7 +78,7 @@ void recvInputCoord() {
     Serial.println("Please input coordinates within the boundaries.");
     Serial.println("X bounds: -33.5 to 28.0 cm");
     Serial.println("Y bounds: -50.5 to 50.5 cm");
-    Serial.println("Z bounds: 27.0 to 55.0 cm"); 
+    Serial.println("Z bounds: 0 to 30 cm"); 
   }
   
   Serial.println("Your input coordinates are: ");
@@ -120,12 +120,12 @@ void loop() {
     float P3_0[]= {D3[0], D3[1], height_lower};
 
   // Coordinates of line anchors
-    float a1 = {28.6891, -41.2129, height_lower};
-    float a2 = {11.2757, -51.2665, height_lower};
-    float b1 = {28.6891, 41.2129, height_lower};
-    float b2 = {11.2757, 51.2665, height_lower};
-    float c1 = {-34.0, -10.0536, height_lower};
-    float c2 = {-34.0, 10.0536, height_lower};
+    float a1[] = {28.6891, -41.2129, height_lower};
+    float a2[] = {11.2757, -51.2665, height_lower};
+    float b1[] = {28.6891, 41.2129, height_lower};
+    float b2[] = {11.2757, 51.2665, height_lower};
+    float c1[] = {-34.0, -10.0536, height_lower};
+    float c2[] = {-34.0, 10.0536, height_lower};
 
   // Cable lengths at starting point
     // Two cables (1 and 2) come from each of the spools (A to C)
@@ -137,9 +137,9 @@ void loop() {
       float l_b2_0 = 47.5885;
       float l_c1_0 = 21.4815;
       float l_c2_0 = 21.4815;
-      float l_d1_0 = height; // Applies only at start when cables are vertical
-      float l_d2_0 = height; 
-      float l_d3_0 = height;
+      float l_d1_0 = height_upper; // Applies only at start when cables are vertical
+      float l_d2_0 = height_upper; 
+      float l_d3_0 = height_upper;
   
   // Receives input coordinates
     recvInputCoord();
@@ -195,6 +195,8 @@ void loop() {
     int abs_b = abs(motorSteps_b1);
     int abs_c = abs(motorSteps_c1);
     int abs_d = abs(motorSteps_d1);
+  
+    int stepsArray[] = {abs_a,abs_b,abs_c,abs_d};
     
         // for checking the number of motor steps per spool:
          /* Serial.println("These are the motor steps:");
