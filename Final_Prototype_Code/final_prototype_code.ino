@@ -72,6 +72,7 @@ void recvInputCoord() {
     }
     if (counter == 0) {
       dum = false;
+      break;
     }
 
     Serial.println("Sorry, you input was out of bounds.");
@@ -161,16 +162,6 @@ void loop() {
     float l_d2 = cableLength(v2, D2);
     float l_d3 = cableLength(v3, D3);
       
-    /*  float l_a1 = (abs(v1[0]-286.891)^2 + abs(v1[1] - 412.129)^2 + abs(v1[2]-266)^2)^(1/2);
-        float l_a2 = (abs(v1[0]-112.757)^2 + abs(v1[1] - 512.665)^2 + abs(v1[2]-266)^2)^(1/2);
-        float l_b1 = (abs(v2[0]-286.891)^2 + abs(v2[1] - 412.129)^2 + abs(v2[2]-266)^2)^(1/2);
-        float l_b2 = (abs(v2[0]-112.757)^2 + abs(v2[1] - 512.665)^2 + abs(v2[2]-266)^2)^(1/2);
-        float l_c1 = (abs(v3[0]-340)^2 + abs(v3[1] - 100.536)^2 + abs(v3[2]-266)^2)^(1/2);
-        float l_c2 = (abs(v3[0]-340)^2 + abs(v3[1] - 100.536)^2 + abs(v3[2]-266)^2)^(1/2);
-        float l_d1 = (266 - v1[2]);
-        float l_d2 = (266 - v2[2]);
-        float l_d3 = (266 - v3[2]);
-    */
 
  // Calculate cable length difference: desired length - current length
     // Only required to be calculated for one cable per spool - works geometrically 
