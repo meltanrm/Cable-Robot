@@ -232,10 +232,10 @@ void loop() {
           }
           
           if (lineDiffc1 > 0){
-            digitalWrite(dirPinC, HIGH);
+            digitalWrite(dirPinC, LOW);
           }
           else {
-            digitalWrite(dirPinC, LOW);
+            digitalWrite(dirPinC, HIGH);
           }
           
           if (lineDiffd1 > 0){
