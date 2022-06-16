@@ -1,6 +1,4 @@
-// Code to move final prototype of cable robot - 5 May 2022
-
-// THIS IS JUST THE TEMPLATE - COORDINATES AND MEASUREMENTS STILL TO BE ADDED
+// Code to move final design of cable robot - 16 June 2022
 
 // NOTES:
 // Set the serial monitor from newline --> no line ending
