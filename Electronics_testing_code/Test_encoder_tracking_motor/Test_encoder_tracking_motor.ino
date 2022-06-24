@@ -96,9 +96,9 @@ void ai0(){
 void ai1(){
   // Check with pin 20 to determine the direction
   if(digitalRead(20)==LOW){
-  counter--;
+    counter--;
   }
   else{
-  counter++;
+    counter++;
   }
 }
